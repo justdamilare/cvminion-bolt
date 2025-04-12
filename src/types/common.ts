@@ -1,0 +1,1 @@
+export type LanguageLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert' | 'Native';
