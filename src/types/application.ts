@@ -20,7 +20,7 @@ export interface Application {
       linkedin: string;
       summary: string;
       experience: {
-        title: string;
+        position: string;
         company: string;
         company_description: string;
         start_date: string;
