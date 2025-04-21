@@ -1,11 +1,21 @@
 import { getSupabaseClient } from './supabase';
 import { toast } from 'react-hot-toast';
+import { AuthError } from '@supabase/supabase-js';
 
-const handleAuthError = (error: any) => {
-  if (error.name === 'AuthRetryableFetchError') {
+interface AuthApiError extends Error {
+  code: string;
+  status: number;
+}
+
+interface CustomAuthError extends Error {
+  name: string;
+}
+
+const handleAuthError = (error: unknown) => {
+  if (error instanceof Error && error.name === 'AuthRetryableFetchError') {
     throw error; // Let the hook handle retryable errors
   }
-  
+
   // Map error messages and codes to user-friendly messages
   const errorMessages: Record<string, string> = {
     'invalid_credentials': 'Invalid email or password. Please check your credentials and try again.',
@@ -15,19 +25,26 @@ const handleAuthError = (error: any) => {
     'email_taken': 'An account with this email already exists. Please sign in instead.',
     'weak_password': 'Password is too weak. Please use a stronger password.',
     'refresh_token_not_found': 'Your session has expired. Please sign in again.',
+    'email_provider_disabled': 'Email sign-in is currently disabled.',
+    'phone_provider_disabled': 'Phone sign-in is currently disabled.',
+    'oauth_provider_not_supported': 'This OAuth provider is not supported.',
+    'over_request_rate_limit': 'Too many requests. Please try again later.',
+    'session_expired': 'Your session has expired. Please sign in again.',
+    'unexpected_failure': 'An unexpected error occurred. Please try again.',
   };
 
   // Get error code from various possible locations in the error object
-  const errorCode = error.code || 
-                   error.error_description || 
-                   (error.message && error.message.toLowerCase().includes('invalid') ? 'invalid_credentials' : null);
+  const errorCode = (error as AuthApiError).code || 
+                   (error as CustomAuthError).name ||
+                   (error instanceof Error && error.message.toLowerCase().includes('invalid') ? 'invalid_credentials' : null);
 
-  const message = errorMessages[errorCode] || error.message || 'An unexpected error occurred. Please try again.';
+  const message = errorCode ? errorMessages[errorCode] : 
+                 error instanceof Error ? error.message : 
+                 'An unexpected error occurred. Please try again.';
   
-  // Add error code to the error object for debugging
-  const enhancedError = new Error(message);
-  enhancedError.__isAuthError = true;
-  enhancedError.code = errorCode;
+  // Create proper AuthError instance
+  const enhancedError = new AuthError(message);
+  enhancedError.code = errorCode || 'unexpected_failure';
   
   throw enhancedError;
 };
@@ -54,7 +71,7 @@ export const signUp = async (email: string, password: string) => {
 
     toast.success('Account created successfully! You can now sign in.');
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     handleAuthError(error);
   }
 };
@@ -77,7 +94,7 @@ export const signIn = async (email: string, password: string) => {
     }
 
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     handleAuthError(error);
   }
 };
@@ -92,7 +109,7 @@ export const signOut = async () => {
     if (error) {
       handleAuthError(error);
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     handleAuthError(error);
   }
 };

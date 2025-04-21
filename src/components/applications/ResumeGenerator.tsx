@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Download, RefreshCw, Loader, Edit2, FileText, Code } from 'lucide-react';
+import { RefreshCw, Loader, Edit2, FileText, Code } from 'lucide-react';
 import { Profile } from '../../types/profile';
-import { Application } from '../../types/application';
+import { Application, Resume } from '../../types/application';
 import { tailorResume } from '../../lib/resume';
 import { toast } from 'react-hot-toast';
 import { ResumeEditor } from './ResumeEditor';
@@ -40,15 +40,16 @@ export const ResumeGenerator: React.FC<ResumeGeneratorProps> = ({
 
       await onUpdate(application.id, {
         generatedResume: {
-          tailored_resume: response.tailored_resume,
+          tailored_resume: response.tailored_resume as unknown as Resume,
           ats_score: response.ats_score
         },
         atsScore: response.ats_score.overall_score,
         lastGeneratedAt: new Date().toISOString()
       });
       toast.success('Resume generated successfully');
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -168,7 +169,7 @@ export const ResumeGenerator: React.FC<ResumeGeneratorProps> = ({
             <div>
               <h4 className="text-sm font-medium text-gray-400 mb-2">Missing Keywords</h4>
               <div className="flex flex-wrap gap-2">
-                {application.generatedResume.ats_score.missing_keywords.map((keyword, index) => (
+                {application.generatedResume.ats_score.missing_keywords.map((keyword: string, index: number) => (
                   <span 
                     key={index}
                     className="px-2 py-1 bg-red-500/20 text-red-400 rounded-full text-sm"
@@ -182,7 +183,7 @@ export const ResumeGenerator: React.FC<ResumeGeneratorProps> = ({
             <div>
               <h4 className="text-sm font-medium text-gray-400 mb-2">Improvement Suggestions</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                {application.generatedResume.ats_score.improvement_suggestions.map((suggestion, index) => (
+                {application.generatedResume.ats_score.improvement_suggestions.map((suggestion: string, index: number) => (
                   <li key={index} className="flex items-start gap-2">
                     <span className="text-yellow-400">•</span>
                     <span>{suggestion}</span>

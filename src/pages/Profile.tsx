@@ -70,7 +70,6 @@ export const ProfilePage = () => {
               languages={profile?.languages || []} 
               onUpdate={handleUpdateProfile} 
             />
-
             <ProjectSection 
               projects={profile?.projects || []} 
               onUpdate={handleUpdateProfile} 

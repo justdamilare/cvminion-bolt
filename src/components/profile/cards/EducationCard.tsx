@@ -40,7 +40,7 @@ export const EducationCard: React.FC<EducationCardProps> = ({
     <div className="bg-dark-light p-6 rounded-lg">
       <div className="flex justify-between items-start mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-white">{education.school}</h3>
+          <h3 className="text-lg font-semibold text-white">{education.institution}</h3>
           <p className="text-gray-400">{education.degree} in {education.field}</p>
           <p className="text-sm text-gray-400">
             {formatDate(education.start_date)} - {education.end_date ? formatDate(education.end_date) : 'Present'}

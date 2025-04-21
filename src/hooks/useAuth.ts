@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getSupabaseClient } from '../lib/supabase';
 import { toast } from 'react-hot-toast';
+import { AuthError } from '@supabase/supabase-js';
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -87,14 +88,17 @@ export const useAuth = () => {
         return () => {
           subscription.unsubscribe();
         };
-      } catch (err: any) {
-        if (mounted) {
-          console.error('Auth error:', err);
-          setError(err.message);
-          setIsAuthenticated(false);
-          
-          if (!err.__isAuthError) {
-            toast.error('Authentication error. Please try again later.');
+      } catch (error) {
+
+        if (error instanceof Error) {
+          if (mounted) {
+            console.error('Auth error:', error);
+            setError(error.message);
+            setIsAuthenticated(false);
+            
+            if (!(error instanceof AuthError)) {
+              toast.error('Authentication error. Please try again later.');
+            }
           }
         }
       } finally {

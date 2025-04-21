@@ -1,79 +1,19 @@
 import { Profile } from '../types/profile';
-import { Application } from '../types/application';
-
-interface TailoredResume {
-  name: string;
-  phone_number: string;
-  address: string;
-  email: string;
-  website: string;
-  linkedin: string;
-  summary: string;
-  experience: {
-    title: string;
-    company: string;
-    company_description: string;
-    start_date: string;
-    end_date: string;
-    location: string;
-    key_achievements: string[];
-    responsibilities: string[];
-  }[];
-  skills: {
-    name: string;
-    level: string;
-  }[];
-  education: {
-    degree: string;
-    field: string;
-    institution: string;
-    start_date: string;
-    end_date: string;
-    relevant_coursework: string[];
-    other_details: string[];
-  }[];
-  languages: {
-    name: string;
-    level: string;
-  }[];
-}
-
-interface ATSScore {
-  overall_score: number;
-  keyword_match_score: number;
-  format_score: number;
-  content_quality_score: number;
-  missing_keywords: string[];
-  improvement_suggestions: string[];
-}
+import { Application, ATSScore } from '../types/application';
 
 interface TailorResumeResponse {
   status: 'success' | 'error';
-  tailored_resume?: TailoredResume;
+  tailored_resume?: Application;
   ats_score?: ATSScore;
   error?: string;
 }
-
-const formatDate = (dateString: string | undefined | null): string => {
-  if (!dateString) return 'Present';
-  try {
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return 'Present';
-    return date.toLocaleDateString('en-US', {
-      month: 'long',
-      year: 'numeric'
-    });
-  } catch {
-    return 'Present';
-  }
-};
 
 export const tailorResume = async (
   profile: Profile,
   application: Application
 ): Promise<TailorResumeResponse> => {
   // Check for required profile fields
-  if (!profile.fullName || !profile.phone || !profile.location || !profile.email) {
+  if (!profile.full_name || !profile.phone_number || !profile.address || !profile.email) {
     return {
       status: 'error',
       error: 'Please complete your profile information (name, phone, location, and email) before generating a resume.'
@@ -81,50 +21,15 @@ export const tailorResume = async (
   }
 
   try {
-    const response = await fetch('https://api.cvminion.com/api/tailor-resume', {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
       },
       body: JSON.stringify({
-        resume: {
-          name: profile.fullName,
-          phone_number: profile.phone,
-          address: profile.location,
-          email: profile.email,
-          website: profile.website || '',
-          linkedin: profile.linkedin || '',
-          summary: profile.summary || '',
-          experience: profile.experience.map(exp => ({
-            title: exp.position,
-            company: exp.company,
-            company_description: exp.description || '',
-            start_date: formatDate(exp.start_date),
-            end_date: formatDate(exp.end_date),
-            location: profile.location,
-            key_achievements: exp.highlights || [],
-            responsibilities: exp.description ? [exp.description] : [],
-          })),
-          education: profile.education.map(edu => ({
-            degree: edu.degree,
-            major: edu.field,
-            institution: edu.school,
-            start_date: formatDate(edu.start_date),
-            end_date: formatDate(edu.end_date),
-            relevant_coursework: [],
-            other_details: edu.description ? [edu.description] : []
-          })),
-          skills: profile.skills.map(skill => ({
-            name: skill.name,
-            level: skill.level,
-          })),
-          languages: (profile.languages || []).map(lang => ({
-            name: lang.name,
-            level: lang.level,
-          }))
-        },
+        resume: profile,
         job_description: application.jobDescription,
-        additional_instructions: "Focus on relevant experience and skills for this position"
       })
     });
 
@@ -141,11 +46,12 @@ export const tailorResume = async (
       status: 'success',
       ...data
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Resume generation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to generate resume. Please try again.';
     return {
       status: 'error',
-      error: error.message || 'Failed to generate resume. Please try again.'
+      error: errorMessage
     };
   }
 };

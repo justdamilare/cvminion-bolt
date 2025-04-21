@@ -13,7 +13,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({
   onCancel
 }) => {
   const [formData, setFormData] = useState({
-    school: education?.school || '',
+    institution: education?.institution || '',
     degree: education?.degree || '',
     field: education?.field || '',
     start_date: education?.start_date || '',
@@ -30,12 +30,12 @@ export const EducationForm: React.FC<EducationFormProps> = ({
     <form onSubmit={handleSubmit} className="bg-dark-light p-6 rounded-lg space-y-4">
       <div>
         <label className="block text-sm font-medium text-gray-400 mb-1">
-          School
+          Institution
         </label>
         <input
           type="text"
-          value={formData.school}
-          onChange={(e) => setFormData({ ...formData, school: e.target.value })}
+          value={formData.institution}
+          onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
           className="w-full bg-dark text-white px-4 py-2 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
           required
         />

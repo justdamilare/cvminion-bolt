@@ -17,8 +17,8 @@ export const useProfile = () => {
 
         const userProfile = await getProfile(user.id);
         setProfile(userProfile);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.');
       } finally {
         setLoading(false);
       }

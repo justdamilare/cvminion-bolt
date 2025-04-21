@@ -1,8 +1,9 @@
-import { LanguageLevel } from './common';
+import { LanguageLevel, SkillLevel } from "./application";
+
 
 export interface Education {
   id: string;
-  school: string;
+  institution: string;
   degree: string;
   field: string;
   start_date: string;
@@ -16,14 +17,14 @@ export interface Experience {
   position: string;
   start_date: string;
   end_date?: string;
-  description: string;
+  company_description: string;
   highlights: string[];
 }
 
 export interface Skill {
   id: string;
   name: string;
-  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
+  level: SkillLevel;
 }
 
 export interface Language {
@@ -49,8 +50,8 @@ export interface Profile {
   id: string;
   full_name: string;
   email: string;
-  phone: string;
-  location: string;
+  phone_number: string;
+  address: string;
   summary: string;
   title: string;
   website?: string;

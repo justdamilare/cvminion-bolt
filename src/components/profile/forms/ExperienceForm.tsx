@@ -18,7 +18,7 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({
     position: experience?.position || '',
     start_date: experience?.start_date || '',
     end_date: experience?.end_date || '',
-    description: experience?.description || '',
+    company_description: experience?.company_description || '',
     highlights: experience?.highlights || ['']
   });
 
@@ -110,10 +110,22 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({
           Description
         </label>
         <textarea
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          value={formData.company_description}
+          onChange={(e) => setFormData({ ...formData, company_description: e.target.value })}
           className="w-full h-32 bg-dark text-white px-4 py-2 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none resize-none"
           required
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-400 mb-1">
+          Company Description
+        </label>
+        <textarea
+          value={formData.company_description}
+          onChange={(e) => setFormData({ ...formData, company_description: e.target.value })}
+          className="w-full h-24 bg-dark text-white px-4 py-2 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none resize-none"
+          placeholder="Brief description of the company..."
         />
       </div>
 

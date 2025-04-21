@@ -51,17 +51,17 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ profile, onUpdate })
               />
               <EditableField
                 icon={<Phone className="w-5 h-5" />}
-                value={profile?.phone ?? ''}
-                onSave={(value) => onUpdate({ phone: value })}
+                value={profile?.phone_number ?? ''}
+                onSave={(value) => onUpdate({ phone_number: value })}
                 className="text-gray-300 hover:text-white transition-colors"
                 placeholder="Phone Number"
               />
               <EditableField
                 icon={<MapPin className="w-5 h-5" />}
-                value={profile?.location ?? ''}
-                onSave={(value) => onUpdate({ location: value })}
+                value={profile?.address ?? ''}
+                onSave={(value) => onUpdate({ address: value })}
                 className="text-gray-300 hover:text-white transition-colors"
-                placeholder="Location"
+                placeholder="Address"
               />
             </div>
             <div className="space-y-4">

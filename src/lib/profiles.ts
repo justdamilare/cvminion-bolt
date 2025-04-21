@@ -1,13 +1,13 @@
 import { getSupabaseClient } from './supabase';
-import { Profile, CreateProfileData, Education, Experience } from '../types/profile';
+import { Profile, Education, Experience } from '../types/profile';
 
 const mapToDbFields = (data: Partial<Profile>) => {
   const mapped: Record<string, any> = {};
   
   if (data.full_name !== undefined) mapped.full_name = data.full_name;
   if (data.email !== undefined) mapped.email = data.email;
-  if (data.phone !== undefined) mapped.phone = data.phone;
-  if (data.location !== undefined) mapped.location = data.location;
+  if (data.phone_number !== undefined) mapped.phone_number = data.phone_number;
+  if (data.address !== undefined) mapped.address = data.address;
   if (data.summary !== undefined) mapped.summary = data.summary;
   if (data.title !== undefined) mapped.title = data.title;
   if (data.website !== undefined) mapped.website = data.website;
@@ -42,8 +42,8 @@ const mapFromDbFields = (data: Profile): Profile => ({
   id: data.id,
   full_name: data.full_name || '',
   email: data.email || '',
-  phone: data.phone || '',
-  location: data.location || '',
+  phone_number: data.phone_number || '',
+  address: data.address || '',
   summary: data.summary || '',
   title: data.title || '',
   website: data.website || '',
@@ -81,7 +81,7 @@ export const getProfile = async (userId: string): Promise<Profile | null> => {
     if (getError) throw getError;
     console.log('existingProfile', existingProfile);
     if (existingProfile) {
-      return mapFromDbFields(existingProfile as Profile);
+      return mapFromDbFields(existingProfile as unknown as Profile);
     }
 
     // Use upsert instead of insert to handle race conditions
@@ -91,8 +91,8 @@ export const getProfile = async (userId: string): Promise<Profile | null> => {
         user_id: userId,
         full_name: '',
         email: '',
-        phone: '',
-        location: '',
+        phone_number: '',
+        address: '',
         summary: '',
         title: '',
         website: '',
@@ -121,14 +121,14 @@ export const getProfile = async (userId: string): Promise<Profile | null> => {
         .single();
 
       if (retryError) throw retryError;
-      return mapFromDbFields(retryProfile);
+      return mapFromDbFields(retryProfile as unknown as Profile);
     }
 
-    return mapFromDbFields(newProfile);
+    return mapFromDbFields(newProfile as unknown as Profile);
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Only log and throw if it's not a duplicate key error
-    if (!error.message?.includes('duplicate key value')) {
+    if (error instanceof Error && !error.message.includes('duplicate key value')) {
       console.error('Profile operation failed:', error);
       throw error;
     }
@@ -141,7 +141,7 @@ export const getProfile = async (userId: string): Promise<Profile | null> => {
       .single();
 
     if (finalError) throw finalError;
-    return mapFromDbFields(finalProfile);
+    return mapFromDbFields(finalProfile as unknown as Profile);
   }
 };
 
@@ -159,5 +159,5 @@ export const updateProfile = async (userId: string, data: Partial<Profile>) => {
     .maybeSingle();
 
   if (error) throw error;
-  return mapFromDbFields(profile);
+  return mapFromDbFields(profile as unknown as Profile);
 };
