@@ -1,10 +1,10 @@
 import { getSupabaseClient } from './supabase';
-import { Profile, CreateProfileData } from '../types/profile';
+import { Profile, CreateProfileData, Education, Experience } from '../types/profile';
 
 const mapToDbFields = (data: Partial<Profile>) => {
   const mapped: Record<string, any> = {};
   
-  if (data.fullName !== undefined) mapped.full_name = data.fullName;
+  if (data.full_name !== undefined) mapped.full_name = data.full_name;
   if (data.email !== undefined) mapped.email = data.email;
   if (data.phone !== undefined) mapped.phone = data.phone;
   if (data.location !== undefined) mapped.location = data.location;
@@ -33,13 +33,14 @@ const mapToDbFields = (data: Partial<Profile>) => {
   
   if (data.skills !== undefined) mapped.skills = data.skills;
   if (data.languages !== undefined) mapped.languages = data.languages;
-  
+  if (data.projects !== undefined) mapped.projects = data.projects;
+  if (data.certifications !== undefined) mapped.certifications = data.certifications;
   return mapped;
 };
 
-const mapFromDbFields = (data: any): Profile => ({
+const mapFromDbFields = (data: Profile): Profile => ({
   id: data.id,
-  fullName: data.full_name || '',
+  full_name: data.full_name || '',
   email: data.email || '',
   phone: data.phone || '',
   location: data.location || '',
@@ -48,20 +49,22 @@ const mapFromDbFields = (data: any): Profile => ({
   website: data.website || '',
   linkedin: data.linkedin || '',
   github: data.github || '',
-  education: Array.isArray(data.education) ? data.education.map((edu: any) => ({
+  education: Array.isArray(data.education) ? data.education.map((edu: Education) => ({
     ...edu,
     start_date: edu.start_date || '',
     end_date: edu.end_date || ''
   })) : [],
-  experience: Array.isArray(data.experience) ? data.experience.map((exp: any) => ({
+  experience: Array.isArray(data.experience) ? data.experience.map((exp: Experience) => ({
     ...exp,
     start_date: exp.start_date || '',
     end_date: exp.end_date || ''
   })) : [],
   skills: Array.isArray(data.skills) ? data.skills : [],
   languages: Array.isArray(data.languages) ? data.languages : [],
-  createdAt: data.created_at,
-  updatedAt: data.updated_at
+  projects: Array.isArray(data.projects) ? data.projects : [],
+  certifications: Array.isArray(data.certifications) ? data.certifications : [],
+  created_at: data.created_at,
+  updated_at: data.updated_at
 });
 
 export const getProfile = async (userId: string): Promise<Profile | null> => {
@@ -76,9 +79,9 @@ export const getProfile = async (userId: string): Promise<Profile | null> => {
       .maybeSingle();
 
     if (getError) throw getError;
-
+    console.log('existingProfile', existingProfile);
     if (existingProfile) {
-      return mapFromDbFields(existingProfile);
+      return mapFromDbFields(existingProfile as Profile);
     }
 
     // Use upsert instead of insert to handle race conditions
@@ -98,7 +101,9 @@ export const getProfile = async (userId: string): Promise<Profile | null> => {
         education: [],
         experience: [],
         skills: [],
-        languages: []
+        languages: [],
+        projects: [],
+        certifications: []
       }], {
         onConflict: 'user_id',
         ignoreDuplicates: true
@@ -143,12 +148,15 @@ export const getProfile = async (userId: string): Promise<Profile | null> => {
 export const updateProfile = async (userId: string, data: Partial<Profile>) => {
   const supabase = getSupabaseClient();
   
+  const mappedData = mapToDbFields(data);
+  console.log('Updating profile with data:', mappedData);
+
   const { data: profile, error } = await supabase
     .from('profiles')
-    .update(mapToDbFields(data))
+    .update(mappedData)
     .eq('user_id', userId)
     .select()
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
   return mapFromDbFields(profile);

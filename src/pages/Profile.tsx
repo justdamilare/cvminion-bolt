@@ -10,7 +10,8 @@ import { ImportSection } from '../components/profile/ImportSection';
 import { updateProfile } from '../lib/profiles';
 import { getSupabaseClient } from '../lib/supabase';
 import { Profile } from '../types/profile';
-
+import { ProjectSection } from '../components/profile/ProjectsSection';
+import { CertificationsSection } from '../components/profile/CertificationsSection';
 export const ProfilePage = () => {
   const { profile: initialProfile, loading } = useProfile();
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -34,7 +35,7 @@ export const ProfilePage = () => {
       
       toast.success('Profile updated successfully');
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error('Failed to update profile: ' +  error.message);
     }
   };
 
@@ -69,6 +70,16 @@ export const ProfilePage = () => {
               languages={profile?.languages || []} 
               onUpdate={handleUpdateProfile} 
             />
+
+            <ProjectSection 
+              projects={profile?.projects || []} 
+              onUpdate={handleUpdateProfile} 
+            />
+
+              <CertificationsSection 
+                certifications={profile?.certifications || []} 
+                onUpdate={handleUpdateProfile} 
+              />
           </div>
           
           <div>

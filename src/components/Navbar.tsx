@@ -20,19 +20,19 @@ export const Navbar = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
           <span className="text-white font-bold text-xl">CVMinion</span>
         </Link>
         
-        <div className="space-x-6">
+        <div className="flex items-center gap-6">
           {isAuthenticated ? (
             <>
-              <Link to="/dashboard" className="text-white hover:text-primary">Dashboard</Link>
+              <Link to="/dashboard" className="text-white hover:text-primary inline-flex items-center">Dashboard</Link>
               <Link to="/profile" className="text-white hover:text-primary inline-flex items-center">
                 <User className="w-4 h-4 mr-2" />
                 Profile
               </Link>
               <button
                 onClick={handleSignOut}
-                className="text-white hover:text-primary inline-flex items-center space-x-1"
+                className="text-white hover:text-primary inline-flex items-center"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-4 h-4 mr-2" />
                 <span>Sign Out</span>
               </button>
             </>

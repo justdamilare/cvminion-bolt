@@ -10,24 +10,6 @@ interface ResumeTemplatesProps {
 
 const templates: { id: ResumeTemplate; name: string; description: string; preview: string }[] = [
   {
-    id: 'professional',
-    name: 'Professional',
-    description: 'Modern professional design with blue accents',
-    preview: 'https://images.unsplash.com/photo-1586282391129-76a6df230234?w=400&q=80'
-  },
-  {
-    id: 'modern',
-    name: 'Modern',
-    description: 'Clean and contemporary design with bold accents',
-    preview: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&q=80'
-  },
-  {
-    id: 'classic',
-    name: 'Classic',
-    description: 'Traditional format for conservative industries',
-    preview: 'https://images.unsplash.com/photo-1574347439246-527970f58baa?w=400&q=80'
-  },
-  {
     id: 'minimal',
     name: 'Minimal',
     description: 'Simple and elegant with focus on content',
@@ -38,12 +20,6 @@ const templates: { id: ResumeTemplate; name: string; description: string; previe
     name: 'Creative',
     description: 'Bold design for creative professionals',
     preview: 'https://images.unsplash.com/photo-1611532736576-1865ce24e589?w=400&q=80'
-  },
-  {
-    id: 'executive',
-    name: 'Executive',
-    description: 'Sophisticated design for senior positions',
-    preview: 'https://images.unsplash.com/photo-1586282391129-76a6df230234?w=400&q=80'
   }
 ];
 

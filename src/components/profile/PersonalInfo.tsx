@@ -12,100 +12,96 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ profile, onUpdate })
   return (
     <div className="bg-dark-light rounded-lg overflow-hidden">
       {/* Header Section */}
-      <div className="relative h-32 bg-gradient-to-r from-yellow-500/20 to-yellow-600/20">
-        <div className="absolute -bottom-16 left-6">
+      <div className="relative h-48 bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 px-6 flex items-end pb-6">
+        <div className="flex items-end gap-6">
           <div className="w-32 h-32 rounded-full bg-dark-light border-4 border-dark-light flex items-center justify-center">
             <User className="w-16 h-16 text-gray-400" />
           </div>
-        </div>
-      </div>
-
-      {/* Content Section */}
-      <div className="pt-20 px-6 pb-6">
-        <div className="grid gap-6">
-          {/* Name and Title */}
-          <div>
+          <div className="mb-4">
             <EditableField
-              value={profile?.fullName ?? ''}
-              onSave={(value) => onUpdate({ fullName: value })}
-              className="text-2xl font-bold text-white block mb-1"
+              value={profile?.full_name ?? ''}
+              onSave={(value) => onUpdate({ full_name: value })}
+              className="text-3xl font-bold text-white block mb-2"
               placeholder="Your Full Name"
             />
             <EditableField
               value={profile?.title ?? ''}
               onSave={(value) => onUpdate({ title: value })}
-              className="text-lg text-gray-400"
+              className="text-xl text-gray-300"
               placeholder="Professional Title"
-              icon={<Briefcase className="w-4 h-4" />}
+              icon={<Briefcase className="w-5 h-5" />}
             />
           </div>
+        </div>
+      </div>
 
-          {/* Contact Grid */}
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-3">
+      {/* Content Section */}
+      <div className="p-6 space-y-8">
+        {/* Contact Information */}
+        <div>
+          <h3 className="text-white text-lg font-semibold mb-4">Contact Information</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
               <EditableField
-                icon={<Mail className="w-4 h-4" />}
+                icon={<Mail className="w-5 h-5" />}
                 value={profile?.email ?? ''}
                 onSave={(value) => onUpdate({ email: value })}
-                className="text-gray-400"
+                className="text-gray-300 hover:text-white transition-colors"
                 placeholder="Email Address"
               />
               <EditableField
-                icon={<Phone className="w-4 h-4" />}
+                icon={<Phone className="w-5 h-5" />}
                 value={profile?.phone ?? ''}
                 onSave={(value) => onUpdate({ phone: value })}
-                className="text-gray-400"
+                className="text-gray-300 hover:text-white transition-colors"
                 placeholder="Phone Number"
               />
               <EditableField
-                icon={<MapPin className="w-4 h-4" />}
+                icon={<MapPin className="w-5 h-5" />}
                 value={profile?.location ?? ''}
                 onSave={(value) => onUpdate({ location: value })}
-                className="text-gray-400"
+                className="text-gray-300 hover:text-white transition-colors"
                 placeholder="Location"
               />
             </div>
-
-            <div className="space-y-3">
+            <div className="space-y-4">
               <EditableField
-                icon={<Globe className="w-4 h-4" />}
+                icon={<Globe className="w-5 h-5" />}
                 value={profile?.website ?? ''}
                 onSave={(value) => onUpdate({ website: value })}
-                className="text-gray-400"
+                className="text-gray-300 hover:text-white transition-colors"
                 placeholder="Personal Website"
                 optional
               />
               <EditableField
-                icon={<ExternalLink className="w-4 h-4" />}
+                icon={<ExternalLink className="w-5 h-5" />}
                 value={profile?.linkedin ?? ''}
                 onSave={(value) => onUpdate({ linkedin: value })}
-                className="text-gray-400"
+                className="text-gray-300 hover:text-white transition-colors"
                 placeholder="LinkedIn URL"
                 optional
               />
               <EditableField
-                icon={<Building2 className="w-4 h-4" />}
+                icon={<Building2 className="w-5 h-5" />}
                 value={profile?.github ?? ''}
                 onSave={(value) => onUpdate({ github: value })}
-                className="text-gray-400"
+                className="text-gray-300 hover:text-white transition-colors"
                 placeholder="GitHub Profile"
                 optional
               />
             </div>
           </div>
+        </div>
 
-          {/* Professional Summary */}
-          <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">
-              Professional Summary
-            </label>
-            <textarea
-              value={profile?.summary ?? ''}
-              onChange={(e) => onUpdate({ summary: e.target.value })}
-              className="w-full h-32 bg-dark text-white px-4 py-3 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none resize-none"
-              placeholder="Write a brief professional summary highlighting your key strengths and career objectives..."
-            />
-          </div>
+        {/* Professional Summary */}
+        <div>
+          <h3 className="text-white text-lg font-semibold mb-4">Professional Summary</h3>
+          <textarea
+            value={profile?.summary ?? ''}
+            onChange={(e) => onUpdate({ summary: e.target.value })}
+            className="w-full h-32 bg-dark text-white px-4 py-3 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none resize-none border border-gray-700 hover:border-gray-600 transition-colors"
+            placeholder="Write a brief professional summary highlighting your key strengths and career objectives..."
+          />
         </div>
       </div>
     </div>

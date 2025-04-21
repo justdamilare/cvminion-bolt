@@ -46,6 +46,15 @@ export interface Application {
         name: string;
         level: string;
       }[];
+      certifications: {
+        name: string;
+        organization: string;
+      }[];
+      projects: {
+        title: string;
+        start_date: string;
+        end_date: string;
+      }[];
     };
     ats_score: {
       overall_score: number;

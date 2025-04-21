@@ -43,43 +43,45 @@ export const EditableField: React.FC<EditableFieldProps> = ({
 
   if (isEditing) {
     return (
-      <div className="flex items-center gap-2">
-        {icon && <span className="text-gray-400">{icon}</span>}
+      <div className="flex items-center gap-2 w-full max-w-[600px]">
+        {icon && <span className="text-gray-400 flex-shrink-0">{icon}</span>}
         <input
           type="text"
           value={editValue}
           onChange={(e) => setEditValue(e.target.value)}
-          className="bg-dark text-white px-2 py-1 rounded focus:ring-2 focus:ring-primary focus:outline-none"
+          className="flex-1 min-w-0 bg-dark text-white px-2 py-1 rounded focus:ring-2 focus:ring-primary focus:outline-none"
           placeholder={placeholder}
           autoFocus
         />
-        <button
-          onClick={handleSave}
-          disabled={loading || (!editValue.trim() && !optional)}
-          className="text-green-400 hover:text-green-300 disabled:opacity-50"
-        >
-          <Check className="w-4 h-4" />
-        </button>
-        <button
-          onClick={handleCancel}
-          disabled={loading}
-          className="text-red-400 hover:text-red-300 disabled:opacity-50"
-        >
-          <X className="w-4 h-4" />
-        </button>
+        <div className="flex-shrink-0 flex items-center gap-2">
+          <button
+            onClick={handleSave}
+            disabled={loading || (!editValue.trim() && !optional)}
+            className="text-green-400 hover:text-green-300 disabled:opacity-50"
+          >
+            <Check className="w-4 h-4" />
+          </button>
+          <button
+            onClick={handleCancel}
+            disabled={loading}
+            className="text-red-400 hover:text-red-300 disabled:opacity-50"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="group relative inline-flex items-center gap-2">
-      {icon && <span className="text-gray-400">{icon}</span>}
-      <span className={`${className} ${!value && 'text-gray-500 italic'}`}>
+    <div className="group flex items-center gap-2 w-full max-w-[600px]">
+      {icon && <span className="text-gray-400 flex-shrink-0">{icon}</span>}
+      <span className={`${className} ${!value && 'text-gray-500 italic'} flex-1 min-w-0`}>
         {value || placeholder || 'Click to edit...'}
       </span>
       <button
         onClick={() => setIsEditing(true)}
-        className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-white ml-2"
+        className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-white"
       >
         <Edit2 className="w-4 h-4" />
       </button>

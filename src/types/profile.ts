@@ -32,9 +32,22 @@ export interface Language {
   level: LanguageLevel;
 }
 
+export interface Project {
+  id: string;
+  title: string;
+  start_date: string | null;
+  end_date: string | null;
+}
+
+export interface Certification {
+  id: string;
+  name: string;
+  organization: string | null;
+}
+
 export interface Profile {
   id: string;
-  fullName: string;
+  full_name: string;
   email: string;
   phone: string;
   location: string;
@@ -47,12 +60,14 @@ export interface Profile {
   experience: Experience[];
   skills: Skill[];
   languages: Language[];
-  createdAt: string;
-  updatedAt: string;
+  projects: Project[];
+  certifications: Certification[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface CreateProfileData {
-  fullName: string;
+  full_name: string;
   email: string;
   phone: string;
   location: string;

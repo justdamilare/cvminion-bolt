@@ -5,18 +5,6 @@ import { ResumeTemplate } from './TemplateBase';
 import { Document, Page, Text, View, StyleSheet, Font, Link } from "@react-pdf/renderer"
 
 // Register fonts
-Font.register({
-  family: 'Helvetica',
-  fonts: [
-    {
-      src: 'https://fonts.cdnfonts.com/s/29107/Helvetica.woff',
-    },
-    {
-      src: 'https://fonts.cdnfonts.com/s/29107/Helvetica-Bold.woff',
-      fontWeight: 700,
-    },
-  ],
-});
 
 Font.register({
   family: "Inter",
