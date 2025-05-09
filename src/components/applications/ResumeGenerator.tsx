@@ -6,7 +6,9 @@ import { tailorResume } from '../../lib/resume';
 import { toast } from 'react-hot-toast';
 import { ResumeEditor } from './ResumeEditor';
 import { PDFResume } from './PDFResume';
-import { ResumeTemplates, ResumeTemplate } from './ResumeTemplates';
+import { ResumeTemplates } from './ResumeTemplates';
+import { ResumeTemplate } from './templates/TemplateBase';
+import { ModernTemplate } from './templates/ModernTemplate';
 
 interface ResumeGeneratorProps {
   profile: Profile;
@@ -23,7 +25,7 @@ export const ResumeGenerator: React.FC<ResumeGeneratorProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [showPDF, setShowPDF] = useState(false);
   const [showJSON, setShowJSON] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState<ResumeTemplate>('modern');
+  const [selectedTemplate, setSelectedTemplate] = useState<ResumeTemplate>(ModernTemplate);
 
   const handleGenerate = async () => {
     setLoading(true);

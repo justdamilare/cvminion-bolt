@@ -2,8 +2,10 @@ import React from 'react';
 import { Check } from 'lucide-react';
 import { ResumeTemplate } from './templates/TemplateBase';
 import { MinimalTemplate } from './templates/MinimalTemplate';
-import { CreativeTemplate } from './templates/CreativeTemplate';
+// import { CreativeTemplate } from './templates/CreativeTemplate';
 import { ModernTemplate } from './templates/ModernTemplate';
+import { NovaTemplate } from './templates/NovaTemplate';
+import { PulseTemplate } from './templates/PulseTemplate';
 
 interface ResumeTemplatesProps {
   selectedTemplate: ResumeTemplate;
@@ -13,7 +15,9 @@ interface ResumeTemplatesProps {
 const templates: ResumeTemplate[] = [
   MinimalTemplate,
   ModernTemplate,
-  CreativeTemplate,
+  NovaTemplate,
+  PulseTemplate,
+  // CreativeTemplate,
   // Add more templates here
 ];
 
