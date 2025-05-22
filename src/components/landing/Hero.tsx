@@ -7,24 +7,23 @@ import { GradientBorder } from '../ui/GradientBorder';
 export const Hero = () => {
   return (
     <div className="relative">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-radial from-yellow-500/10 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-transparent to-transparent dark:from-primary/5" />
       
       <FadeIn className="relative text-center lg:py-32 py-20">
-        <span className="inline-flex items-center px-3 py-1 rounded-full bg-dark-light border border-yellow-500/20 text-yellow-500 text-sm mb-8">
+        <span className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 dark:bg-primary/20 text-gray-900 dark:text-primary text-sm mb-8">
           <Sparkles className="w-4 h-4 mr-2" />
           AI-Powered Resume Builder
         </span>
         
         <h1 className="text-7xl font-bold mb-6 leading-tight">
-          <span className="text-white">Land Your</span>
+          <span className="text-gray-900 dark:text-white">Land Your</span>
           <br />
           <span className="gradient-text">Dream Job Faster</span>
         </h1>
         
-        <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-12">  
+        <p className="text-gray-600 dark:text-gray-300 text-xl max-w-2xl mx-auto mb-12">  
           Let AI craft your perfect resume for every application. 
-          <span className="text-white"> Get more interviews</span> with tailored resumes 
+          <span className="text-gray-900 dark:text-white"> Get more interviews</span> with tailored resumes 
           that beat ATS systems.
         </p>
         
@@ -41,7 +40,7 @@ export const Hero = () => {
           
           <Link
             to="/demo"
-            className="text-white hover:text-primary transition-colors px-8 py-4 rounded-lg font-bold text-lg inline-flex items-center"
+            className="text-gray-900 dark:text-white hover:text-primary transition-colors px-8 py-4 rounded-lg font-bold text-lg inline-flex items-center"
           >
             See Demo
           </Link>

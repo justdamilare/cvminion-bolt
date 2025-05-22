@@ -40,10 +40,10 @@ export const Features = () => {
   return (
     <div className="py-20">
       <FadeIn className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-white mb-4">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
           Powered by <span className="gradient-text">Intelligence</span>
         </h2>
-        <p className="text-gray-400 text-xl max-w-2xl mx-auto">
+        <p className="text-gray-600 dark:text-gray-300 text-xl max-w-2xl mx-auto">
           Our AI-powered platform helps you create perfect resumes for every job application
         </p>
       </FadeIn>

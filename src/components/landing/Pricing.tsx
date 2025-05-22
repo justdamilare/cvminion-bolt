@@ -34,7 +34,7 @@ export const Pricing = () => {
   return (
     <div className="py-20">
       <FadeIn>
-        <h2 className="text-4xl font-bold text-white text-center mb-12">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white text-center mb-12">
           Simple, Transparent <span className="gradient-text">Pricing</span>
         </h2>
       </FadeIn>
@@ -43,7 +43,7 @@ export const Pricing = () => {
           <FadeIn 
             key={index} 
             delay={index * 0.2}
-            className={`bg-dark-light p-8 rounded-lg ${
+            className={`bg-white dark:bg-dark-light p-8 rounded-lg ${
               plan.popular ? 'ring-2 ring-primary' : ''
             }`}
           >
@@ -52,16 +52,16 @@ export const Pricing = () => {
                 Most Popular
               </span>
             )}
-            <h3 className="text-2xl font-bold text-white mt-4">{plan.name}</h3>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-4">{plan.name}</h3>
             <div className="mt-4 mb-6">
-              <span className="text-4xl font-bold text-white">{plan.price}</span>
+              <span className="text-4xl font-bold text-gray-900 dark:text-white">{plan.price}</span>
               {plan.period && (
-                <span className="text-gray-400">{plan.period}</span>
+                <span className="text-gray-600 dark:text-gray-400">{plan.period}</span>
               )}
             </div>
             <ul className="space-y-4 mb-8">
               {plan.features.map((feature, i) => (
-                <li key={i} className="flex items-center text-gray-400">
+                <li key={i} className="flex items-center text-gray-600 dark:text-gray-400">
                   <Check className="w-5 h-5 text-primary mr-2" />
                   {feature}
                 </li>
@@ -70,7 +70,7 @@ export const Pricing = () => {
             <button className={`w-full py-3 rounded-lg font-bold ${
               plan.popular
                 ? 'bg-primary text-dark hover:bg-primary-dark'
-                : 'bg-dark text-white hover:bg-dark-light border border-gray-700'
+                : 'bg-gray-100 dark:bg-dark text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-dark-light border border-gray-200 dark:border-gray-700'
             } transition-all transform hover:scale-105`}>
               {plan.buttonText}
             </button>
