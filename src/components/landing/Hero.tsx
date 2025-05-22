@@ -22,9 +22,9 @@ export const Hero = () => {
           <span className="gradient-text">Dream Job Faster</span>
         </h1>
         
-        <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-12">
+        <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-12">  
           Let AI craft your perfect resume for every application. 
-          <span className="text-white">Get more interviews</span> with tailored resumes 
+          <span className="text-white"> Get more interviews</span> with tailored resumes 
           that beat ATS systems.
         </p>
         
@@ -34,7 +34,7 @@ export const Hero = () => {
               to="/signup"
               className="bg-primary text-dark px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary-dark inline-flex items-center space-x-2 transform hover:scale-105 transition-all w-full justify-center"
             >
-              <span>Start Free Trial</span>
+              <span>Get Started</span>
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </GradientBorder>

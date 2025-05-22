@@ -1,17 +1,22 @@
 import React from 'react';
-import { FileText, Search, Send } from 'lucide-react';
+import { FilePen, FileText, Send, Wand } from 'lucide-react';
 import { FadeIn } from '../ui/FadeIn';
 
 const steps = [
   {
-    icon: <FileText className="w-12 h-12 text-primary" />,
+    icon: <FilePen className="w-12 h-12 text-primary" />,
     title: "Create Your Base Profile",
     description: "Input your experience, skills, and achievements once to create your master profile."
   },
   {
-    icon: <Search className="w-12 h-12 text-primary" />,
-    title: "Find Your Dream Job",
-    description: "Paste the job description and let our AI analyze the requirements."
+    icon: <FileText className="w-12 h-12 text-primary" />,
+    title: "Create New Job Application",
+    description: "Input the job description and let our AI analyze the requirements."
+  },
+  {
+    icon: <Wand className="w-12 h-12 text-primary" />,
+    title: "AI-Powered Resume",
+    description: "Our AI will generate a tailored resume based on your profile and the job description."
   },
   {
     icon: <Send className="w-12 h-12 text-primary" />,
@@ -29,7 +34,7 @@ export const HowItWorks = () => {
             How It <span className="gradient-text">Works</span>
           </h2>
         </FadeIn>
-        <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid md:grid-cols-4 gap-12">
           {steps.map((step, index) => (
             <FadeIn key={index} delay={index * 0.2}>
               <div className="text-center">

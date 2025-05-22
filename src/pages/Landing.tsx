@@ -4,6 +4,7 @@ import { Features } from '../components/landing/Features';
 import { HowItWorks } from '../components/landing/HowItWorks';
 import { Stats } from '../components/landing/Stats';
 import { Pricing } from '../components/landing/Pricing';
+import { Footer } from '../components/Footer';
 
 export const Landing = () => {
   return (
@@ -15,6 +16,7 @@ export const Landing = () => {
       </div>
       <HowItWorks />
       <Pricing />
+      <Footer />
     </div>
   );
 };
