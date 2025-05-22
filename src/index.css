@@ -8,10 +8,20 @@
   body {
     font-family: 'Cabinet Grotesk', sans-serif;
   }
+
+  :root {
+    --primary: #FFD700;
+    --primary-dark: #FFC700;
+  }
+
+  .dark {
+    --primary: #FFD700;
+    --primary-dark: #FFC700;
+  }
 }
 
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark;
 }
 
 @keyframes float {
@@ -26,4 +36,11 @@
 
 .bg-gradient-radial {
   background-image: radial-gradient(var(--tw-gradient-stops));
+}
+
+/* Dark mode transitions */
+.transition-colors {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }
